@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "upload-files"
+version = "0.1.0"
+description = "The backend API to upload multiple files from the website"
+authors = ["Mino Randrianarivo <minotolotra@nimseven.pro>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.0"
+uvicorn = "^0.30.6"
+python-multipart = "^0.0.10"
+python-dotenv = "^1.0.1"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.6.7"
+bandit = "^1.7.10"
+xenon = "^0.9.1"
+pytest = "^8.3.3"
+mypy = "^1.11.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
