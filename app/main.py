@@ -6,7 +6,10 @@ import imghdr
 
 load_dotenv()
 
-app = FastAPI()
+STAGE = os.getenv("STAGE", "dev")
+UPLOAD_DIR = os.getenv("UPLOAD_DIR", "uploads")
+
+app = FastAPI(docs_url=None, redoc_url=None) if STAGE == "prod" else FastAPI()
 
 origins = os.getenv('ALLOWED_ORIGINS', 'http://localhost:3000').split(',')
 
