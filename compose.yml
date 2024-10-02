@@ -5,6 +5,7 @@ services:
       - "8090:8090"
     volumes:
       - ./uploads:/app/uploads
+    restart: unless-stopped
   #   depends_on:
   #     - db
   # db:
