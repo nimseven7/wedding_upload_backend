@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import os
 import imghdr
+import mimetypes
 
 load_dotenv()
 
@@ -28,11 +29,16 @@ async def upload_file(files: list[UploadFile], foldername: str = Form('anonymous
     folder_path = os.path.join(UPLOAD_DIR, foldername)
     os.makedirs(folder_path, exist_ok=True)
     
+    allowed_video_types = ["video/mp4", "video/x-matroska", "video/x-msvideo", "video/x-ms-wmv"]
+
     for file in files:
-        # Check if the file is an image
+        # Check if the file is an image or video
         file_content = await file.read()
-        if imghdr.what(None, h=file_content) is None:
-            raise HTTPException(status_code=400, detail="Only image files are allowed")
+        file_type = imghdr.what(None, h=file_content)
+        mime_type, _ = mimetypes.guess_type(file.filename)
+        
+        if file_type is None and mime_type not in allowed_video_types:
+            raise HTTPException(status_code=400, detail="Only image and video files are allowed")
         
         file_path = os.path.join(folder_path, file.filename)
         with open(file_path, "wb") as buffer:
