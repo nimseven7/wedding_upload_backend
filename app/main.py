@@ -1,9 +1,10 @@
-from fastapi import FastAPI, UploadFile, Form, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
-import os
 import imghdr
 import mimetypes
+import os
+
+from dotenv import load_dotenv
+from fastapi import FastAPI, Form, HTTPException, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
@@ -29,7 +30,7 @@ async def upload_file(files: list[UploadFile], foldername: str = Form('anonymous
     folder_path = os.path.join(UPLOAD_DIR, foldername)
     os.makedirs(folder_path, exist_ok=True)
     
-    allowed_video_types = ["video/mp4", "video/x-matroska", "video/x-msvideo", "video/x-ms-wmv"]
+    allowed_video_types = ["video/mp4", "video/x-matroska", "video/x-msvideo", "video/x-ms-wmv", "video/webm", "video/quicktime"]
 
     for file in files:
         # Check if the file is an image or video
